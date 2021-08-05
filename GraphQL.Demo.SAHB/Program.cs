@@ -6,9 +6,9 @@ namespace GraphQL.Demo.SAHB {
         public async static Task Main(string[] args) {
             Console.WriteLine("Hello World!");
 
-            GraphQLClient cc = GraphQLClient.Default();
+            GraphQLClient client = GraphQLClient.Default();
 
-            var data = await cc.Query<UsersType>();
+            var data = await client.Query<UsersType>();
 
             Console.WriteLine(data.users[0].username);
         }

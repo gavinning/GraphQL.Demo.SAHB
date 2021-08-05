@@ -7,18 +7,13 @@ using SAHB.GraphQLClient.QueryGenerator;
 
 namespace GraphQL.Demo.SAHB
 {
-    public class GraphQLClient
-    {
-        string baseURL = "http://localhost:9902/graphql";
-        IGraphQLHttpClient client = GraphQLHttpClient.Default();
+    public class GraphQLClient {
 
-        public static GraphQLClient Default()
-        {
+        readonly string baseURL = "http://localhost:9902/graphql";
+        readonly IGraphQLHttpClient client = GraphQLHttpClient.Default();
+
+        public static GraphQLClient Default() {
             return new GraphQLClient();
-        }
-
-        public GraphQLClient()
-        {
         }
 
         public async Task<T> Query<T> () where T : class {
