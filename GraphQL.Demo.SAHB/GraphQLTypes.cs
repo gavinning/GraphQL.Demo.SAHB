@@ -2,6 +2,12 @@
 
 namespace GL {
 
+    public class Me {
+        public int id { get; set; }
+        public string username { get; set; }
+        public Role role { get; set; }
+    }
+
     public class User {
         public int id { get; set; }
         public string username { get; set; }
@@ -33,5 +39,9 @@ namespace GL {
     public class AutoLogin {
         [GraphQLArgumentsAttribute("input", "autoLoginInput!", "input")]
         public AutoLoginPayload autoLogin { get; set; }
+    }
+
+    public class QueryME {
+        public Me me { get; set; }
     }
 }

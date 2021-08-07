@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using SAHB.GraphQLClient.Exceptions;
-using SAHB.GraphQLClient.QueryGenerator;
 
 namespace GraphQL.Demo.SAHB {
 
@@ -12,9 +11,12 @@ namespace GraphQL.Demo.SAHB {
         public async static Task Main(string[] args) {
             Console.WriteLine("Hello World!");
 
-            await MutateDemo();
+            //await MutateDemo();
+
+            await MEDemo();
         }
 
+        // demo query
         async static Task QueryDemo() {
             try {
                 var data = await client.Query<GL.Users>();
@@ -28,11 +30,19 @@ namespace GraphQL.Demo.SAHB {
             }
         }
 
+        // demo mutation
         async static Task MutateDemo() {
             var data = await client.AutoLogin(clientId: "1");
             Console.WriteLine("user.id: " +  data.autoLogin.user.id);
             Console.WriteLine("user.username: " + data.autoLogin.user.username);
             Console.WriteLine("user.token: " + data.autoLogin.jwt);
+        }
+
+        // demo with token
+        async static Task MEDemo() {
+            var data1 = await client.AutoLogin(clientId: "1");
+            var data2 = await client.ME(data1.autoLogin.jwt);
+            Console.WriteLine(data2.me.username);
         }
     }
 }

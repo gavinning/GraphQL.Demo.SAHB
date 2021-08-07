@@ -21,12 +21,32 @@ namespace GraphQL.Demo.SAHB {
             return client.Query<T>(baseURL, arguments: args);
         }
 
+        public Task<T> Query<T>(string token) where T : class {
+            return client.CreateQuery<T>(baseURL, authorizationToken: token).Execute();
+        }
+
+        public Task<T> Query<T>(string token, GraphQLQueryArgument args) where T : class {
+            return client.CreateQuery<T>(baseURL, authorizationToken: token, arguments: args).Execute();
+        }
+
         public Task<T> Mutate<T>() where T : class {
             return client.Mutate<T>(baseURL);
         }
 
         public Task<T> Mutate<T>(GraphQLQueryArgument args) where T : class {
             return client.Mutate<T>(baseURL, arguments: args);
+        }
+
+        public Task<T> Mutate<T>(string token) where T : class {
+            return client.CreateMutation<T>(baseURL, authorizationToken: token).Execute();
+        }
+
+        public Task<T> Mutate<T>(string token, GraphQLQueryArgument args) where T : class {
+            return client.CreateMutation<T>(baseURL, authorizationToken: token, arguments: args).Execute();
+        }
+
+        public Task<GL.QueryME> ME(string token) {
+            return Query<GL.QueryME>(token);
         }
 
         public Task<GL.AutoLogin> AutoLogin(string clientId) {
