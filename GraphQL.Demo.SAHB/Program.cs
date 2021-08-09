@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using SAHB.GraphQLClient.Exceptions;
+using Newtonsoft.Json;
 
 namespace GraphQL.Demo.SAHB {
 
@@ -13,14 +14,16 @@ namespace GraphQL.Demo.SAHB {
 
             //await MutateDemo();
 
-            await MEDemo();
+            //await MyDemo();
+
+            await Posts();
         }
 
         // demo query
         async static Task QueryDemo() {
             try {
                 var data = await client.Query<GL.Users>();
-                Console.WriteLine(data.users[0].username);
+                Console.WriteLine(data.users?[0].username);
             }
             catch(GraphQLErrorException err) {
                 Console.WriteLine("GraphQLError:" + err.Message);
@@ -39,10 +42,17 @@ namespace GraphQL.Demo.SAHB {
         }
 
         // demo with token
-        async static Task MEDemo() {
+        async static Task MyDemo() {
             var data1 = await client.AutoLogin(clientId: "1");
-            var data2 = await client.ME(data1.autoLogin.jwt);
-            Console.WriteLine(data2.me.username);
+            var data2 = await client.My(data1.autoLogin.jwt);
+            Console.WriteLine(data2.my.username);
+        }
+
+        async static Task Posts() {
+            //var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI4NTEwNjE0LCJleHAiOjE2NjAxMzMwMTR9.ZpDe3M3jFkw2x9mqEwCsl1YTSD5AAUHlhTFDbYfIC6c";
+            var data1 = await client.AutoLogin(clientId: "1");
+            var data2 = await client.Posts(data1.autoLogin.jwt);
+            Console.WriteLine(JsonConvert.SerializeObject(data2.posts, Formatting.Indented));
         }
     }
 }
