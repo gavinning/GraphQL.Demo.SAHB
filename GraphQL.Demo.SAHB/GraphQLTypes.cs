@@ -51,7 +51,7 @@ namespace GL {
         }
     }
 
-    public class Goods : Base {
+    public class Good : Base {
         public string name { get; set; }
         public string type { get; set; }
         public float price { get; set; }
@@ -61,7 +61,7 @@ namespace GL {
         public int status { get; set; }
         public string? description { get; set; }
 
-        public Goods(string name, string type) {
+        public Good(string name, string type) {
             this.name = name;
             this.type = type;
         }
@@ -70,7 +70,7 @@ namespace GL {
     public class Trade : Base {
         public string tradeid { get; set; }
         public User? user { get; set; }
-        public Goods? goods { get; set; }
+        public Good? good { get; set; }
         public int status { get; set; }
         public string? paidAt { get; set; }
         public string? created_at { get; set; }
@@ -86,14 +86,14 @@ namespace GL {
         public string? content { get; set; }
         public string permission { get; set; } = "public";
         public User? user { get; set; }
-        public Goods? goods { get; set; }
+        public Good? good { get; set; }
         public Upload? image { get; set; }
         public string? created_at { get; set; }
         public string? updated_at { get; set; }
 
-        public Post(User user, Goods goods, Upload image) {
+        public Post(User user, Good goods, Upload image) {
             this.user = user;
-            this.goods = goods;
+            this.good = goods;
             this.image = image;
         }
     }
@@ -121,7 +121,7 @@ namespace GL {
         public string? client { get; set; }
         public string? ip { get; set; }
         public string? status { get; set; }
-        public string? content { get; set; }
+        public string? context { get; set; }
         public string? statck { get; set; }
         public string? created_at { get; set; }
         public string? updated_at { get; set; }
@@ -143,6 +143,27 @@ namespace GL {
         }
     }
 
+    public class QUser {
+        [GraphQLArgumentsAttribute("id", "ID!", "id")]
+        public User user { get; set; }
+
+        public QUser(User user) {
+            this.user = user;
+        }
+    }
+
+    public class QUsers {
+        [GraphQLArgumentsAttribute("start", "Int", "start")]
+        [GraphQLArgumentsAttribute("limit", "Int", "limit")]
+        [GraphQLArgumentsAttribute("sort", "String", "sort")]
+        [GraphQLArgumentsAttribute("where", "JSON", "where")]
+        public User[] users { get; set; }
+
+        public QUsers(User[] users) {
+            this.users = users;
+        }
+    }
+
     public class QPost {
         [GraphQLArgumentsAttribute("id", "ID!", "id")]
         public Post post { get; set; }
@@ -161,6 +182,91 @@ namespace GL {
 
         public QPosts(Post[] posts) {
             this.posts = posts;
+        }
+    }
+
+    public class QGood {
+        [GraphQLArgumentsAttribute("id", "ID!", "id")]
+        public Good good { get; set; }
+
+        public QGood(Good good) {
+            this.good = good;
+        }
+    }
+
+    public class QGoods {
+        [GraphQLArgumentsAttribute("start", "Int", "start")]
+        [GraphQLArgumentsAttribute("limit", "Int", "limit")]
+        [GraphQLArgumentsAttribute("sort", "String", "sort")]
+        [GraphQLArgumentsAttribute("where", "JSON", "where")]
+        public Good[] goods { get; set; }
+
+        public QGoods(Good[] goods) {
+            this.goods = goods;
+        }
+    }
+
+    public class QTrade {
+        [GraphQLArgumentsAttribute("id", "ID!", "id")]
+        public Trade trade { get; set; }
+
+        public QTrade(Trade trade) {
+            this.trade = trade;
+        }
+    }
+
+    public class QTrades {
+        [GraphQLArgumentsAttribute("start", "Int", "start")]
+        [GraphQLArgumentsAttribute("limit", "Int", "limit")]
+        [GraphQLArgumentsAttribute("sort", "String", "sort")]
+        [GraphQLArgumentsAttribute("where", "JSON", "where")]
+        public Trade[] trades { get; set; }
+
+        public QTrades(Trade[] trades) {
+            this.trades = trades;
+        }
+    }
+
+    public class QLike {
+        [GraphQLArgumentsAttribute("id", "ID!", "id")]
+        public Like like { get; set; }
+
+        public QLike(Like like) {
+            this.like = like;
+        }
+    }
+
+    public class QLikes {
+        [GraphQLArgumentsAttribute("start", "Int", "start")]
+        [GraphQLArgumentsAttribute("limit", "Int", "limit")]
+        [GraphQLArgumentsAttribute("sort", "String", "sort")]
+        [GraphQLArgumentsAttribute("where", "JSON", "where")]
+        public Like[] likes { get; set; }
+
+        public QLikes(Like[] likes) {
+            this.likes = likes;
+        }
+    }
+
+    public class QEvent {
+        [GraphQLFieldName("event")]
+        [GraphQLArgumentsAttribute("id", "ID!", "id")]
+        public Event e { get; set; }
+
+        public QEvent(Event e) {
+            this.e = e;
+        }
+    }
+
+    public class QEvents {
+        [GraphQLArgumentsAttribute("start", "Int", "start")]
+        [GraphQLArgumentsAttribute("limit", "Int", "limit")]
+        [GraphQLArgumentsAttribute("sort", "String", "sort")]
+        [GraphQLArgumentsAttribute("where", "JSON", "where")]
+        public Event[] events { get; set; }
+
+        public QEvents(Event[] events) {
+            this.events = events;
         }
     }
 }

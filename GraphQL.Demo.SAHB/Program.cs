@@ -16,7 +16,9 @@ namespace GraphQL.Demo.SAHB {
 
             //await MyDemo();
 
-            await Posts();
+            //await Posts();
+
+            await Lists();
         }
 
         // demo query
@@ -48,11 +50,20 @@ namespace GraphQL.Demo.SAHB {
             Console.WriteLine(data2.my.username);
         }
 
+        // posts request demo
         async static Task Posts() {
             //var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI4NTEwNjE0LCJleHAiOjE2NjAxMzMwMTR9.ZpDe3M3jFkw2x9mqEwCsl1YTSD5AAUHlhTFDbYfIC6c";
             var data1 = await client.AutoLogin(clientId: "1");
             var data2 = await client.Posts(data1.autoLogin.jwt);
             Console.WriteLine(JsonConvert.SerializeObject(data2.posts, Formatting.Indented));
+        }
+
+        // lists request demo
+        async static Task Lists() {
+            //var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI4NTEwNjE0LCJleHAiOjE2NjAxMzMwMTR9.ZpDe3M3jFkw2x9mqEwCsl1YTSD5AAUHlhTFDbYfIC6c";
+            var data1 = await client.AutoLogin(clientId: "1");
+            var data2 = await client.Lists<GL.QEvents>(data1.autoLogin.jwt);
+            Console.WriteLine(JsonConvert.SerializeObject(data2.events, Formatting.Indented));
         }
     }
 }
