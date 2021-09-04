@@ -6,7 +6,8 @@ using Newtonsoft.Json.Linq;
 namespace GraphQL.Demo.SAHB {
     public class GraphQLClient {
 
-        readonly string baseURL = "http://localhost:9902/graphql";
+        //readonly string baseURL = "http://localhost:9902/graphql";
+        readonly string baseURL = "https://draw.dayuxinyong.com/graphql";
         readonly IGraphQLHttpClient client = GraphQLHttpClient.Default();
 
         public static GraphQLClient Default() {

@@ -7,7 +7,7 @@ namespace GL {
     public class User: Base {
         public string username { get; set; }
         public string clientId { get; set; }
-        public bool isPermanentVip { get; set; } = false;
+        public bool? isPermanentVip { get; set; } = false;
         public string? tel { get; set; }
         public string? vipExpiredAt { get; set; }
 
@@ -51,33 +51,55 @@ namespace GL {
         }
     }
 
-    public class Good : Base {
+    public class Vip : Base {
         public string name { get; set; }
-        public string type { get; set; }
         public float price { get; set; }
         public float originalPrice { get; set; }
-        public bool owned { get; set; } = false;
         public int effectiveDay { get; set; }
-        public int status { get; set; }
         public string? description { get; set; }
 
-        public Good(string name, string type) {
+        public Vip(string name, string type) {
             this.name = name;
-            this.type = type;
+        }
+    }
+
+    public class Album : Base {
+        public string name { get; set; }
+        public float price { get; set; }
+        public float originalPrice { get; set; }
+        public string? description { get; set; }
+        public bool owned { get; set; } = false;
+
+        public Album(string name, string type) {
+            this.name = name;
+        }
+    }
+
+    public class Product : Base {
+        public string name { get; set; }
+        public float price { get; set; }
+        public float originalPrice { get; set; }
+        public string? description { get; set; }
+        public bool owned { get; set; } = false;
+
+        public Product(string name) {
+            this.name = name;
         }
     }
 
     public class Trade : Base {
-        public string tradeid { get; set; }
+        public string? tradeid { get; set; }
         public User? user { get; set; }
-        public Good? good { get; set; }
+        public int pid { get; set; }
+        public string type { get; set; }
         public int status { get; set; }
         public string? paidAt { get; set; }
         public string? created_at { get; set; }
         public string? updated_at { get; set; }
 
-        public Trade(string tradeid) {
-            this.tradeid = tradeid;
+        public Trade(int pid, string type) {
+            this.pid = pid;
+            this.type = type;
         }
     }
 
@@ -85,16 +107,16 @@ namespace GL {
         public string? title { get; set; }
         public string? content { get; set; }
         public string permission { get; set; } = "public";
-        public User? user { get; set; }
-        public Good? good { get; set; }
-        public Upload? image { get; set; }
+        public User user { get; set; }
+        public Product product { get; set; }
+        public Upload image { get; set; }
         public string? created_at { get; set; }
         public string? updated_at { get; set; }
 
-        public Post(User user, Good goods, Upload image) {
+        public Post(User user, Product product, Upload image) {
             this.user = user;
-            this.good = goods;
             this.image = image;
+            this.product = product;
         }
     }
 
@@ -185,24 +207,66 @@ namespace GL {
         }
     }
 
-    public class QGood {
+    public class QVip {
         [GraphQLArgumentsAttribute("id", "ID!", "id")]
-        public Good good { get; set; }
+        public Vip vip { get; set; }
 
-        public QGood(Good good) {
-            this.good = good;
+        public QVip(Vip vip) {
+            this.vip = vip;
         }
     }
 
-    public class QGoods {
+    public class QVips {
         [GraphQLArgumentsAttribute("start", "Int", "start")]
         [GraphQLArgumentsAttribute("limit", "Int", "limit")]
         [GraphQLArgumentsAttribute("sort", "String", "sort")]
         [GraphQLArgumentsAttribute("where", "JSON", "where")]
-        public Good[] goods { get; set; }
+        public Vip[] vips { get; set; }
 
-        public QGoods(Good[] goods) {
-            this.goods = goods;
+        public QVips(Vip[] vips) {
+            this.vips = vips;
+        }
+    }
+
+    public class QProduct {
+        [GraphQLArgumentsAttribute("id", "ID!", "id")]
+        public Product product { get; set; }
+
+        public QProduct(Product product) {
+            this.product = product;
+        }
+    }
+
+    public class QProducts {
+        [GraphQLArgumentsAttribute("start", "Int", "start")]
+        [GraphQLArgumentsAttribute("limit", "Int", "limit")]
+        [GraphQLArgumentsAttribute("sort", "String", "sort")]
+        [GraphQLArgumentsAttribute("where", "JSON", "where")]
+        public Product[] products { get; set; }
+
+        public QProducts(Product[] products) {
+            this.products = products;
+        }
+    }
+
+    public class QAlbum {
+        [GraphQLArgumentsAttribute("id", "ID!", "id")]
+        public Album album { get; set; }
+
+        public QAlbum(Album album) {
+            this.album = album;
+        }
+    }
+
+    public class QAlbums {
+        [GraphQLArgumentsAttribute("start", "Int", "start")]
+        [GraphQLArgumentsAttribute("limit", "Int", "limit")]
+        [GraphQLArgumentsAttribute("sort", "String", "sort")]
+        [GraphQLArgumentsAttribute("where", "JSON", "where")]
+        public Album[] albums { get; set; }
+
+        public QAlbums(Album[] albums) {
+            this.albums = albums;
         }
     }
 

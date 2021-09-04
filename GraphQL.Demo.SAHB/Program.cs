@@ -16,7 +16,7 @@ namespace GraphQL.Demo.SAHB {
 
             //await MyDemo();
 
-            //await Posts();
+            await Posts();
 
             await Lists();
         }
@@ -62,8 +62,9 @@ namespace GraphQL.Demo.SAHB {
         async static Task Lists() {
             //var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI4NTEwNjE0LCJleHAiOjE2NjAxMzMwMTR9.ZpDe3M3jFkw2x9mqEwCsl1YTSD5AAUHlhTFDbYfIC6c";
             var data1 = await client.AutoLogin(clientId: "1");
-            var data2 = await client.Lists<GL.QEvents>(data1.autoLogin.jwt);
-            Console.WriteLine(JsonConvert.SerializeObject(data2.events, Formatting.Indented));
+            Console.WriteLine(data1.autoLogin.jwt);
+            var data2 = await client.Lists<GL.QVips>(data1.autoLogin.jwt);
+            Console.WriteLine(JsonConvert.SerializeObject(data2.vips, Formatting.Indented));
         }
     }
 }
